@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: gateway-zuul
+server:  port: 8556
+  
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+    register-with-eureka: true
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    preferIpAddress: true
+zuul:
+  routes:    message-service:
+      path: /message/**
+      service-id: MESSAGE-SERVICE
+      strip-prefix: true
+    order-service:
+      path: /order/**
+      service-id: ORDER-SERVICE
+      strip-prefix: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
